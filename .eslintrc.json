@@ -1,0 +1,29 @@
+{
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+  "plugins": [
+    "prettier"
+  ],
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "no-unused-expressions": "off",
+    "no-invalid-this": "error",
+    "no-return-await": "warn",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": [
+          "default"
+        ],
+        "format": [
+          "camelCase",
+          "PascalCase",
+          "UPPER_CASE"
+        ]
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "off"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "diff": true,
+  "extension": [
+    "js"
+  ],
+  "fullTrace": true,
+  "recursive": true,
+  "package": "./package.json",
+  "reporter": "spec",
+  "require": [
+    "source-map-support/register"
+  ],
+  "slow": 150,
+  "timeout": 300000,
+  "ui": "bdd"
+}

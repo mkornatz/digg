@@ -1,0 +1,52 @@
+{
+  "name": "digg",
+  "version": "0.0.1",
+  "description": "Finds information about a domain name, ip address, or URL.",
+  "main": "dist/index.js",
+  "scripts": {
+    "cli": "node $NODE_DEBUG_OPTION -r source-map-support/register ./dist/src/cli.js",
+    "test": "npm t",
+    "build": "npm run clean && mkdir -p dist/src/templates && cp -R src/templates dist/src/ && npx tsc",
+    "clean": "rm -rf ./dist",
+    "watch": "npm run clean && mkdir -p dist/src/templates && cp -R src/templates dist/src/ && npx tsc -w",
+    "lint": "eslint --cache -ext .js,.ts ./",
+    "lint:fix": "eslint --cache --fix --ext .js,.ts ./"
+  },
+  "bin": {
+    "digg": "./dist/cli.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "author": "matt@mkornatz.com",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "change-case": "^4.1.2",
+    "commander": "^4.1.0",
+    "ejs": "^3.0.1",
+    "html-entities": "^2.1.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "os": "^0.1.1",
+    "promisify-call": "^2.0.4",
+    "whois": "^2.13.3",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.0.6",
+    "@types/lodash": "^4.14.168",
+    "@types/node": "^14.14.35",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-eslint-plugin": "^2.3.0",
+    "eslint-plugin-mocha": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "mocha": "^8.3.2",
+    "prettier": "^1.18.2",
+    "source-map-support": "^0.5.19",
+    "typescript": "^4.2.3"
+  }
+}

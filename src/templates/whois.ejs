@@ -1,0 +1,16 @@
+Whois    : <%= domainName %>
+Created  : <%= moment(creationDate).format('LL') %>
+Updated  : <%= moment(updatedDate).format('LL') %>
+Expires  : <%= moment(registrarRegistrationExpirationDate).format('LL') %>
+
+Status   :  <%= domainStatus.replace(/\(?https:\/\/[^\/]+\/[^\s]+/g, '') %>
+Registrar: <%= locals.registrar %> (<%= locals.registrarUrl %>)
+Sold by  :   <%= locals.reseller %>
+
+Registered to:
+ <% if (locals.registrantName) { %><%= locals.registrantName %> <% } %><%= locals.registrantOrganization %>
+ <%= locals.registrantEmail %>
+ Location: <% if (locals.registrantCity) { %><%= locals.registrantCity %>, <% } %><%= locals.registrantStateProvince %>, <%= locals.registrantCountry %>
+
+Name Servers:
+<%= `  ` + nameServer.split(' ').join(`\n  `) %>
