@@ -30,8 +30,6 @@ command
       ],
     });
 
-    printToStdOut(`Diggin' into ${domainOrUrl}\n`);
-
     const digg = new Digg({ domainOrUrl })
       .on('txt', async txt => {
         await renderTemplate('dns.txt', { txt });
