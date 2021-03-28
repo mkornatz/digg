@@ -8,7 +8,8 @@ import Resolver = promises.Resolver;
 
 export class Digg extends EventEmitter {
   private domain?: string;
-  private ip?: string;
+  private apexDomain?: string;
+  private ip4s?: string[];
 
   constructor({ domainOrUrl }: { domainOrUrl: string }) {
     super();
@@ -16,10 +17,14 @@ export class Digg extends EventEmitter {
     if (this.isUrl(domainOrUrl)) {
       const parsedUrl = new URL(domainOrUrl);
       this.domain = parsedUrl.hostname ?? '';
-    } else if (this.isIp(domainOrUrl)) {
-      this.ip = domainOrUrl;
+    } else if (this.isIp4(domainOrUrl)) {
+      this.ip4s = [domainOrUrl];
     } else {
       this.domain = domainOrUrl;
+    }
+
+    if (this.domain && this.isSubdomain(this.domain)) {
+      this.apexDomain = this.apex(this.domain);
     }
   }
 
@@ -31,7 +36,11 @@ export class Digg extends EventEmitter {
     return !!domain.match(/^([a-z]+:\/{2})?([\w-]+\.[\w-]+\.\w+)$/);
   }
 
-  private isIp(domainOrIp: string) {
+  private apex(domain: string) {
+    return domain;
+  }
+
+  private isIp4(domainOrIp: string) {
     return domainOrIp.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/);
   }
 
@@ -93,10 +102,10 @@ export class Digg extends EventEmitter {
     }
   }
 
-  async arin(aRecords: string[]) {
+  async arin(ip4s: string[]) {
     try {
       const arin = new ArinWhoisClient();
-      const arinResults = await arin.ownersOf(aRecords);
+      const arinResults = await arin.ownersOf(ip4s);
       this.emit(
         'arin',
         uniqBy(arinResults, result => `${result.net.startAddress['$']}${result.net.endAddress['$']}`),
@@ -107,8 +116,8 @@ export class Digg extends EventEmitter {
   }
 
   async findAll() {
-    if (this.ip) {
-      return this.arin([this.ip]);
+    if (this.ip4s) {
+      return this.arin(this.ip4s);
     } else {
       this.on('a', async a => {
         await this.arin(a);
