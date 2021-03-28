@@ -7,8 +7,7 @@ import path from 'path';
 import { createLogger, format, transports } from 'winston';
 import { Digg } from './digg';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-async function renderTemplate<T extends Object>(templateName: string, data: T) {
+async function renderTemplate<T extends Record<string, unknown>>(templateName: string, data: T) {
   const filePath = path.join(__dirname, `templates/${templateName}.ejs`);
   const output = await ejs.renderFile(filePath, {
     ...data,
